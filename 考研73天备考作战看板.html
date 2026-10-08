@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考研73天备考作战看板</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232C5847'/%3E%3Cpath d='M9 8h14v3h-5.5v13h-3V11H9z' fill='%23F2F0E9'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --paper:#f2f0e9;
+  --card:#fbfaf5;
+  --ink:#202925;
+  --ink-soft:#46504a;
+  --pine:#2c5847;
+  --pine-deep:#1e3d32;
+  --pine-soft:#e7efe9;
+  --cinnabar:#b2473a;
+  --cinnabar-soft:#f6e9e6;
+  --ocher:#a9792f;
+  --ocher-soft:#f4ecdc;
+  --line:#dcd6c6;
+  --line-soft:#e7e2d5;
+  --muted:#7d8279;
+  --shadow:0 1px 2px rgba(32,41,37,.05),0 6px 20px rgba(32,41,37,.05);
+  --serif:'Noto Serif SC',Georgia,'Songti SC',serif;
+  --sans:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:60px;
+}
+button{font-family:var(--sans);cursor:pointer;border:none;background:none;color:inherit}
+/* ===== 顶栏 ===== */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(242,240,233,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;gap:18px;
+  padding:10px 20px;
+}
+.brand{display:flex;align-items:baseline;gap:10px;white-space:nowrap}
+.brand-mark{
+  width:26px;height:26px;background:var(--pine);border-radius:5px;
+  display:inline-flex;align-items:center;justify-content:center;
+  color:#f2f0e9;font-family:var(--serif);font-weight:700;font-size:15px;
+  align-self:center;
+}
+.brand-name{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.5px}
+.brand-sub{font-size:11px;color:var(--muted);letter-spacing:1px}
+.nav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+.nav-item{
+  padding:6px 13px;font-size:13.5px;color:var(--ink-soft);
+  border-radius:6px;letter-spacing:.5px;
+}
+.nav-item:hover{background:rgba(44,88,71,.08)}
+.nav-item.active{background:var(--pine);color:#f4f2ec;font-weight:500}
+.countdown{
+  display:flex;align-items:baseline;gap:6px;
+  padding:4px 12px;border:1px solid var(--line);border-radius:8px;
+  background:var(--card);white-space:nowrap;
+}
+.countdown-num{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--cinnabar);line-height:1}
+.countdown-label{font-size:11px;color:var(--muted)}
+/* ===== 布局 ===== */
+.wrap{max-width:1080px;margin:0 auto;padding:26px 20px 0}
+.view{display:none;animation:fade .25s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.section-head{margin-bottom:16px}
+.eyebrow{font-size:11.5px;letter-spacing:2px;color:var(--pine);font-weight:500}
+h1.view-title{font-family:var(--serif);font-size:26px;font-weight:900;margin:4px 0 6px;letter-spacing:1px}
+.view-desc{font-size:13.5px;color:var(--muted)}
+/* ===== 今日：日期条 ===== */
+.day-bar{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:14px 18px;box-shadow:var(--shadow);margin-bottom:16px;
+}
+.day-switch{display:flex;gap:6px}
+.day-btn{
+  width:34px;height:34px;border:1px solid var(--line);border-radius:7px;
+  background:var(--paper);font-size:15px;color:var(--ink-soft);
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.day-btn:hover{border-color:var(--pine);color:var(--pine)}
+.day-main{flex:1;min-width:180px}
+.day-date{font-family:var(--serif);font-size:19px;font-weight:700}
+.day-meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+.stage-pill{
+  display:inline-block;padding:2px 10px;border-radius:20px;font-size:11.5px;
+  font-weight:500;margin-right:6px;
+}
+.pill-1{background:var(--pine-soft);color:var(--pine-deep)}
+.pill-2{background:var(--ocher-soft);color:var(--ocher)}
+.pill-3{background:var(--cinnabar-soft);color:var(--cinnabar)}
+.today-jump{padding:7px 14px;border:1px solid var(--pine);color:var(--pine);border-radius:7px;font-size:13px}
+.today-jump:hover{background:var(--pine);color:#f4f2ec}
+/* ===== 横幅提示 ===== */
+.banner{
+  border-radius:9px;padding:12px 16px;margin-bottom:16px;font-size:13.5px;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.banner-danger{background:var(--cinnabar-soft);border:1px solid #e3c2bb;color:#7d3027}
+.banner-info{background:var(--ocher-soft);border:1px solid #e0d0ad;color:#6f4f1c}
+.banner b{font-weight:700}
+/* ===== 统计卡 ===== */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stat-card{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:14px 16px;box-shadow:var(--shadow);
+}
+.stat-num{font-family:var(--serif);font-size:26px;font-weight:900;line-height:1.1}
+.stat-num.pine{color:var(--pine)}
+.stat-num.cinnabar{color:var(--cinnabar)}
+.stat-label{font-size:12px;color:var(--muted);margin-top:3px}
+.progress-track{height:8px;background:var(--line-soft);border-radius:6px;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;background:var(--pine);border-radius:6px;transition:width .35s ease}
+.progress-fill.cinnabar{background:var(--cinnabar)}
+/* ===== 任务分组 ===== */
+.task-group{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  margin-bottom:13px;overflow:hidden;box-shadow:var(--shadow);
+}
+.task-group-head{
+  display:flex;align-items:center;gap:11px;
+  padding:12px 16px;border-bottom:1px solid var(--line-soft);
+}
+.subject-tag{
+  width:5px;height:22px;border-radius:3px;flex:none;
+}
+.tag-math{background:var(--pine)}
+.tag-ds{background:var(--ocher)}
+.tag-en{background:#4a7a9c}
+.tag-politics{background:var(--cinnabar)}
+.tag-health{background:var(--muted)}
+.task-group-title{font-family:var(--serif);font-size:15px;font-weight:700}
+.task-group-time{margin-left:auto;font-size:12px;color:var(--muted)}
+.task-list{padding:4px 8px}
+.task-item{
+  display:flex;gap:11px;align-items:flex-start;
+  padding:10px 10px;border-radius:7px;width:100%;text-align:left;
+}
+.task-item:hover{background:var(--paper)}
+.task-checkbox{
+  width:20px;height:20px;border:1.8px solid #b4b8ac;border-radius:5px;flex:none;
+  margin-top:2px;display:inline-flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.task-item.done .task-checkbox{background:var(--pine);border-color:var(--pine)}
+.task-checkbox svg{width:12px;height:12px;opacity:0;transition:opacity .15s}
+.task-item.done .task-checkbox svg{opacity:1}
+.task-body{flex:1;font-size:13.5px;color:var(--ink)}
+.task-item.done .task-body{color:var(--muted);text-decoration:line-through}
+.task-note{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.task-item.done .task-note{color:#a8aca3}
+/* ===== 复盘 ===== */
+.review-box{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:16px;box-shadow:var(--shadow);
+}
+.review-box label{font-family:var(--serif);font-size:15px;font-weight:700;display:block;margin-bottom:8px}
+.review-box textarea{
+  width:100%;min-height:78px;resize:vertical;
+  border:1px solid var(--line);border-radius:8px;background:var(--paper);
+  padding:10px 12px;font-family:var(--sans);font-size:13.5px;color:var(--ink);
+  line-height:1.6;outline:none;
+}
+.review-box textarea:focus{border-color:var(--pine)}
+.review-save{font-size:11.5px;color:var(--pine);margin-top:6px;min-height:16px}
+/* ===== 通用卡片/表格 ===== */
+.panel{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 20px;margin-bottom:15px;box-shadow:var(--shadow);
+}
+.panel h2{font-family:var(--serif);font-size:17px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:9px}
+.panel h3{font-family:var(--serif);font-size:14.5px;font-weight:700;margin:14px 0 6px;color:var(--pine-deep)}
+.panel p{font-size:13.5px;margin-bottom:7px;color:var(--ink-soft)}
+.panel ul{padding-left:20px;margin-bottom:8px}
+.panel li{font-size:13.5px;color:var(--ink-soft);margin-bottom:4px}
+.redline-list li{color:var(--ink)}
+.redline-list b{color:var(--cinnabar)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0}
+.tbl-fixed{table-layout:fixed}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:middle}
+th{background:#ece8db;font-weight:700;font-family:var(--serif)}
+td:first-child,th:first-child{text-align:center}
+.col-narrow{width:32%}
+/* ===== 阶段手风琴 ===== */
+.phase{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow);
+}
+.phase-head{
+  width:100%;display:flex;align-items:center;gap:14px;
+  padding:15px 18px;text-align:left;
+}
+.phase-head:hover{background:var(--paper)}
+.phase-no{
+  font-family:var(--serif);font-size:15px;font-weight:900;flex:none;
+  width:46px;height:46px;border-radius:9px;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.phase-no.n1{background:var(--pine-soft);color:var(--pine-deep)}
+.phase-no.n2{background:var(--ocher-soft);color:var(--ocher)}
+.phase-no.n3{background:var(--cinnabar-soft);color:var(--cinnabar)}
+.phase-title{font-family:var(--serif);font-size:16px;font-weight:700}
+.phase-range{font-size:12px;color:var(--muted);margin-top:1px}
+.phase-toggle{margin-left:auto;font-size:18px;color:var(--muted);transition:transform .25s;flex:none}
+.phase.open .phase-toggle{transform:rotate(45deg)}
+.phase-body{display:none;padding:2px 20px 18px;border-top:1px solid var(--line-soft)}
+.phase.open .phase-body{display:block}
+.phase-body h4{font-family:var(--serif);font-size:14px;margin:14px 0 6px;color:var(--pine-deep)}
+/* ===== 时间轴 ===== */
+.timeline{position:relative;margin:10px 0 4px}
+.tl-grid{display:grid;grid-template-columns:150px 34px 1fr;column-gap:0}
+.tl-time{padding:14px 12px 14px 0;text-align:right;font-size:12.5px;color:var(--muted);line-height:1.5}
+.tl-axis{position:relative}
+.tl-axis::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--line);transform:translateX(-50%)}
+.tl-dot{
+  position:absolute;left:50%;top:22px;transform:translateX(-50%);
+  width:13px;height:13px;border-radius:50%;background:var(--card);
+  border:2.5px solid var(--pine);z-index:1;
+}
+.tl-dot.major{background:var(--cinnabar);border-color:var(--cinnabar);width:15px;height:15px}
+.tl-dot.ocher{border-color:var(--ocher)}
+.tl-content{padding:10px 0 18px 16px}
+.tl-card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:13px}
+.tl-card b{font-family:var(--serif);font-size:13.5px}
+.tl-card p{color:var(--muted);font-size:12.5px;margin-top:2px}
+/* ===== 清单视图 ===== */
+.checklist-group{margin-bottom:15px}
+.checklist-group h3{font-family:var(--serif);font-size:15px;font-weight:700;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line-soft)}
+.cl-item{display:flex;gap:11px;align-items:flex-start;padding:7px 6px;border-radius:7px;width:100%;text-align:left}
+.cl-item:hover{background:rgba(44,88,71,.05)}
+.cl-item.done .task-body{color:var(--muted);text-decoration:line-through}
+.reset-btn{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:5px 12px;border-radius:7px}
+.reset-btn:hover{color:var(--cinnabar);border-color:var(--cinnabar)}
+/* ===== toast ===== */
+.toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--pine-deep);color:#f2f0e9;padding:9px 20px;border-radius:8px;
+  font-size:13px;opacity:0;pointer-events:none;transition:all .3s;z-index:100;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ===== 响应式 ===== */
+@media (max-width:860px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .nav{order:3;width:100%;margin-left:0}
+  .topbar-inner{flex-wrap:wrap;gap:10px}
+  .countdown{margin-left:auto}
+  .tl-grid{grid-template-columns:104px 26px 1fr}
+  .tl-time{font-size:11.5px}
+}
+@media (max-width:520px){
+  .wrap{padding:18px 13px 0}
+  .topbar-inner{padding:9px 13px}
+  .brand-sub{display:none}
+  .nav-item{padding:6px 9px;font-size:12.5px}
+  h1.view-title{font-size:22px}
+  .stats{grid-template-columns:1fr 1fr;gap:9px}
+  .stat-card{padding:11px 13px}
+  .panel{padding:15px}
+  .tl-grid{grid-template-columns:24px 1fr}
+  .tl-time{display:none}
+  .tl-content{padding-left:12px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">研</span>
+      <div>
+        <div class="brand-name">备考作战看板</div>
+        <div class="brand-sub">830 数据结构</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <button class="nav-item active" data-view="today">今日打卡</button>
+      <button class="nav-item" data-view="plan">阶段计划</button>
+      <button class="nav-item" data-view="timeline">时间轴</button>
+      <button class="nav-item" data-view="materials">资料目标</button>
+      <button class="nav-item" data-view="checklist">清单</button>
+    </nav>
+    <div class="countdown">
+      <span class="countdown-num" id="countdownNum">--</span>
+      <span class="countdown-label">天后初试</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ===== 视图：今日打卡 ===== -->
+<section class="view active" id="view-today">
+  <div class="section-head">
+    <div class="eyebrow">DAILY CHECK-IN</div>
+    <h1 class="view-title">今日打卡</h1>
+    <div class="view-desc">勾选完成的任务，进度自动保存在本机浏览器。50分钟学习＋10分钟休息，休息时抬高右手。</div>
+  </div>
+
+  <div class="day-bar">
+    <div class="day-switch">
+      <button class="day-btn" id="prevDay" title="前一天">‹</button>
+      <button class="day-btn" id="nextDay" title="后一天">›</button>
+    </div>
+    <div class="day-main">
+      <div class="day-date" id="dayDate">--</div>
+      <div class="day-meta" id="dayMeta">--</div>
+    </div>
+    <button class="today-jump" id="todayJump">回到今天</button>
+  </div>
+
+  <div id="bannerSlot"></div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-num pine" id="todayDone">0/0</div>
+      <div class="stat-label">今日任务完成</div>
+      <div class="progress-track"><div class="progress-fill" id="todayBar" style="width:0"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num cinnabar" id="streakNum">0</div>
+      <div class="stat-label">连续打卡（天）</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num pine" id="daysDone">0</div>
+      <div class="stat-label">已打卡天数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="overallPct">0%</div>
+      <div class="stat-label">总体进度</div>
+      <div class="progress-track"><div class="progress-fill cinnabar" id="overallBar" style="width:0"></div></div>
+    </div>
+  </div>
+
+  <div id="taskSlot"></div>
+
+  <div class="review-box">
+    <label for="reviewText">睡前10分钟复盘</label>
+    <textarea id="reviewText" placeholder="记录今天完成了什么、哪些没完成、明天优先补什么……（自动保存）"></textarea>
+    <div class="review-save" id="reviewSave"></div>
+  </div>
+</section>
+
+<!-- ===== 视图：阶段计划 ===== -->
+<section class="view" id="view-plan">
+  <div class="section-head">
+    <div class="eyebrow">MASTER PLAN</div>
+    <h1 class="view-title">阶段计划</h1>
+    <div class="view-desc">10月9日—初试共73天，分三个阶段。点击各阶段可展开／收起。</div>
+  </div>
+
+  <div class="panel">
+    <h2>四条核心红线</h2>
+    <ul class="redline-list">
+      <li><b>11月10日之后，数学不再看任何新网课</b>，只允许回看错题对应的课程片段。</li>
+      <li>所有科目难题战略性舍弃，只抓基础题和中档题；一道题卡<b>30分钟</b>以上直接标记跳过。</li>
+      <li><b>10月30日关键自测</b>决定报考院校，不达标立刻切换备选，及时止损。</li>
+      <li>数学取消武忠祥配套基础习题，<b>87—00真题拆成两半</b>，分别用于基础阶段和强化阶段。</li>
+    </ul>
+  </div>
+
+  <div class="phase open" id="phase1">
+    <button class="phase-head" data-phase="phase1">
+      <span class="phase-no n1">壹</span>
+      <span>
+        <span class="phase-title">一轮收尾 ＋ 启动强化</span>
+        <span class="phase-range">10月9日—10月31日 · 23天</span>
+      </span>
+      <span class="phase-toggle">＋</span>
+    </button>
+    <div class="phase-body">
+      <h4>数学 · 每日3小时</h4>
+      <ul>
+        <li>10.9—10.18：基础课过完高数剩余章节＋完整线代基础课；会的章节倍速过、只做例题，薄弱章节完整听。<b>不做配套基础习题</b>，同步刷87—00真题挑出的一半基础题（按章节）。</li>
+        <li>10.19—10.31：每日1小时强化课（倍速）＋2小时刷剩余一半87—00真题，按章节、不整套限时。</li>
+        <li>只做：极限、导数、积分、微分方程、二重积分、矩阵、方程组、特征值；跳过老大纲概率、过时偏题、极难证明、计算量爆炸压轴题。</li>
+        <li>错题打字记录错因；某章正确率低于50%，回看基础课对应片段补漏。</li>
+      </ul>
+      <h4>数据结构 · 每日2.5小时</h4>
+      <ul>
+        <li>10.9—10.20：一轮收尾树、二叉树、图、查找、排序；放弃KMP复杂证明与超难算法证明，掌握概念、时间复杂度、核心代码框架。</li>
+        <li>10.21—10.31：王道课后只做基础、中档题，难题跳过；打字整理简答考点与核心代码模板。</li>
+      </ul>
+      <h4>英语 · 每日2小时</h4>
+      <ul>
+        <li>10.9—10.15：纯背词，每日新词60~80个＋复习旧词160个。</li>
+        <li>10.16起：每2天1篇英二阅读Part A精读，奇数天做题拆长难句、偶数天复盘生词；不整套限时。</li>
+        <li>约10.22—10.27背完1800词第一轮，之后停止大量新词、全程滚动复习；完形、新题型、翻译、作文暂不碰。</li>
+      </ul>
+      <h4>政治 · 每日1小时</h4>
+      <ul><li>精简网课倍速看，学一章刷一章肖1000题，只做选择题，错题打字记录要点，不背大题。</li></ul>
+      <h4>10月30日 · 关键闭卷限时自测</h4>
+      <ul>
+        <li>数学：一套00—10数二真题完整限时；专业课：一套南宁师大数据结构卷限时。</li>
+        <li>数二≥80且专业课≥90：安心报考闽南师大；数二70~79且专业课≥85：维持报考、数学每日加30分钟；数二＜70：切换南宁师范／武汉轻工。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase" id="phase2">
+    <button class="phase-head" data-phase="phase2">
+      <span class="phase-no n2">贰</span>
+      <span>
+        <span class="phase-title">强化收尾 ＋ 真题整套模考</span>
+        <span class="phase-range">11月1日—11月30日 · 30天</span>
+      </span>
+      <span class="phase-toggle">＋</span>
+    </button>
+    <div class="phase-body">
+      <p>每日框架：数学3小时｜数据结构2小时｜英语2小时｜政治1.5小时。</p>
+      <h4>数学</h4>
+      <ul>
+        <li>11.1—11.10：强化课全部收尾，薄弱章节完整看、掌握好的跳过视频只做例题；<b>11月10日后禁止任何新网课</b>。</li>
+        <li>11.10—11.30：00—16真题整套限时，闭卷→订正→错题只回看强化片段；压轴大题只拿第一小问，难问放弃。</li>
+      </ul>
+      <h4>数据结构</h4>
+      <ul>
+        <li>11.1—11.15：二刷王道错题，背简答，打字默写核心代码模板。</li>
+        <li>11.16—11.30：每两周一套南宁师范／安庆师范真题限时模拟，训练简答与代码答题规范。</li>
+      </ul>
+      <h4>英语</h4>
+      <ul>
+        <li>单词只滚动复习；每天1篇阅读精读，逐步限时18~20分钟；11月10日左右加入新题型，每周2~3篇。</li>
+        <li>11月20日启动作文：整理小作文、大作文共2套模板（打字），每周打字写1篇真题作文。</li>
+      </ul>
+      <h4>政治</h4>
+      <ul><li>二刷肖1000错题，腿姐冲刺手册主攻选择题考点，大题不背。</li></ul>
+    </div>
+  </div>
+
+  <div class="phase" id="phase3">
+    <button class="phase-head" data-phase="phase3">
+      <span class="phase-no n3">叁</span>
+      <span>
+        <span class="phase-title">全真模考 ＋ 背诵保温</span>
+        <span class="phase-range">12月1日—初试前 · 20天 · 无任何新课</span>
+      </span>
+      <span class="phase-toggle">＋</span>
+    </button>
+    <div class="phase-body">
+      <p>每日框架：数学2.5小时｜数据结构2小时｜英语1.5小时｜政治2小时。</p>
+      <h4>数学</h4>
+      <ul><li>16—24真题整套全真限时模考；不刷新难题，重点复盘全部错题本、回顾公式与常规题型；真题做完后二刷错题保温。</li></ul>
+      <h4>数据结构</h4>
+      <ul><li>二刷模拟卷错题，反复背简答、打字默写代码模板，快速过王道错题查漏补缺。</li></ul>
+      <h4>英语</h4>
+      <ul><li>单词滚动；真题套卷整套限时（阅读、新题型、作文为主）；熟练套用作文模板，少量练翻译，完形随缘。</li></ul>
+      <h4>政治</h4>
+      <ul><li>肖八只做选择题、不背大题；肖四上市后全力背诵全部分析题，选择题少量保温。</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 视图：时间轴 ===== -->
+<section class="view" id="view-timeline">
+  <div class="section-head">
+    <div class="eyebrow">TIMELINE</div>
+    <h1 class="view-title">关键节点时间轴</h1>
+    <div class="view-desc">红色为不可错过的关键节点，黄色为任务切换点。</div>
+  </div>
+  <div class="panel">
+    <div class="timeline">
+      <div class="tl-grid">
+        <div class="tl-time">10月9日</div>
+        <div class="tl-axis"><span class="tl-dot"></span></div>
+        <div class="tl-content"><div class="tl-card"><b>备考启动</b><p>进入阶段一，数学基础收尾，数据结构一轮收尾。</p></div></div>
+
+        <div class="tl-time">10月16日</div>
+        <div class="tl-axis"><span class="tl-dot ocher"></span></div>
+        <div class="tl-content"><div class="tl-card"><b>启动英语阅读</b><p>每2天1篇英二阅读Part A精读。</p></div></div>
+
+        <div class="tl-time">10月22—27日</div>
+        <div class="tl-axis"><span class="tl-dot ocher"></span></div>
+        <div class="tl-content"><div class="tl-card"><b>1800核心词背完一轮</b><p>之后停止大量新词，全程滚动复习。</p></div></div>
+
+        <div class="tl-time">10月30日</div>
+        <div class="tl-axis"><span class="tl-dot major"></span></div>
+        <div class="tl-content"><div class="tl-card"><b>关键闭卷自测 · 定院校</b><p>数二00—10真题＋南宁师大数据结构卷，按分数决定报考。</p></div></div>
+
+        <div class="tl-time">11月1日</div>
+        <div class="tl-axis"><span class="tl-dot"></span></div>
+        <div class="tl-content"><div class="tl-card"><b>进入阶段二</b><p>强化收尾，00—16真题整套限时模考。</p></div></div>
+
+        <div class="tl-time">11月10日</div>
+        <div class="tl-axis"><span class="tl-dot major"></span></div>
+        <div class="tl-content"><div class="tl-card"><b>数学网课截止红线</b><p>此后不再看任何新网课，只回看错题片段。</p></div></div>
+
+        <div class="tl-time">11月20日</div>
+        <div class="tl-axis"><span class="tl-dot ocher"></span></div>
+        <div class="tl-content"><div class="tl-card"><b>启动作文模板</b><p>整理大小作文2套模板，每周写1篇。</p></div></div>
+
+        <div class="tl-time">12月1日</div>
+        <div class="tl-axis"><span class="tl-dot"></span></div>
+        <div class="tl-content"><div class="tl-card"><b>进入阶段三</b><p>16—24真题全真模考，背诵保温，无新课。</p></div></div>
+
+        <div class="tl-time">12月上中旬</div>
+        <div class="tl-axis"><span class="tl-dot ocher"></span></div>
+        <div class="tl-content"><div class="tl-card"><b>肖四上市</b><p>全力背诵肖四全部分析题。</p></div></div>
+
+        <div class="tl-time">12月19—20日</div>
+        <div class="tl-axis"><span class="tl-dot major"></span></div>
+        <div class="tl-content"><div class="tl-card"><b>初试</b><p>73天努力，一次上岸。</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 视图：资料目标 ===== -->
+<section class="view" id="view-materials">
+  <div class="section-head">
+    <div class="eyebrow">GOALS & MATERIALS</div>
+    <h1 class="view-title">目标分数 · 资料 · 作息</h1>
+    <div class="view-desc">目标总分310分，只抓基础和中档题。</div>
+  </div>
+
+  <div class="panel">
+    <h2>目标分数</h2>
+    <table class="tbl-fixed">
+      <colgroup><col class="col-narrow"><col></colgroup>
+      <tr><th>科目</th><th>目标分数</th></tr>
+      <tr><td>数学二</td><td>90分</td></tr>
+      <tr><td>830数据结构</td><td>100分</td></tr>
+      <tr><td>英语二</td><td>60分</td></tr>
+      <tr><td>政治</td><td>60分</td></tr>
+      <tr><td>合计</td><td>310分</td></tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2>备考资料清单</h2>
+    <table class="tbl-fixed">
+      <colgroup><col style="width:26%"><col></colgroup>
+      <tr><th>科目</th><th>资料</th></tr>
+      <tr><td>数学二</td><td>武忠祥基础课、武忠祥强化课；真题三本：87—00、00—16、16—24</td></tr>
+      <tr><td>830数据结构</td><td>王道教材＋王道课后习题；南宁师范／安庆师范自命题卷（无本校真题，平替自测）</td></tr>
+      <tr><td>英语二</td><td>1800核心词汇书（已背700词）；英二真题套卷</td></tr>
+      <tr><td>政治</td><td>肖1000题、腿姐冲刺手册、肖八、肖四</td></tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2>每日固定作息框架</h2>
+    <table class="tbl-fixed">
+      <colgroup><col style="width:22%"><col style="width:30%"><col></colgroup>
+      <tr><th>时段</th><th>科目</th><th>时长</th></tr>
+      <tr><td>上午</td><td>数学二</td><td>3小时</td></tr>
+      <tr><td>下午</td><td>830数据结构</td><td>2~2.5小时</td></tr>
+      <tr><td>傍晚</td><td>英语二</td><td>2小时（阶段三1.5小时）</td></tr>
+      <tr><td>晚上</td><td>政治</td><td>1小时（阶段二1.5小时，阶段三2小时）</td></tr>
+    </table>
+    <p>时段可前后平移，科目顺序不变；按50分钟学习＋10分钟休息循环。</p>
+  </div>
+
+  <div class="panel">
+    <h2>备选预案</h2>
+    <ul>
+      <li>自测达标：正常报名闽南师范大学830。</li>
+      <li>数学长期低于70分：立即更换备选院校（南宁师范／武汉轻工），降低难度。</li>
+      <li>基础阶段刷87—00真题大量看不懂时，暂停真题、回补基础课例题，不硬刷。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== 视图：清单 ===== -->
+<section class="view" id="view-checklist">
+  <div class="section-head">
+    <div class="eyebrow">CHECKLIST</div>
+    <h1 class="view-title">极简打卡清单</h1>
+    <div class="view-desc">勾选状态自动保存在本机。</div>
+  </div>
+  <div class="panel checklist-group">
+    <h3>每日固定任务</h3>
+    <div id="clDaily"></div>
+  </div>
+  <div class="panel checklist-group">
+    <h3>阶段一专项 · 10月9日—10月31日</h3>
+    <div id="clP1"></div>
+  </div>
+  <div class="panel checklist-group">
+    <h3>阶段二专项 · 11月1日—11月30日</h3>
+    <div id="clP2"></div>
+  </div>
+  <div class="panel checklist-group">
+    <h3>阶段三专项 · 12月1日—初试前</h3>
+    <div id="clP3"></div>
+  </div>
+  <div style="text-align:right">
+    <button class="reset-btn" id="resetAll">清空全部勾选与记录</button>
+  </div>
+</section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+/* ---------- 常量 ---------- */
+var START = {y:2026,m:10,d:9};
+var END   = {y:2026,m:12,d:20};
+var EXAM  = {y:2026,m:12,d:19};
+var STORE_KEY = 'kaoyan-plan-v1';
+var TOTAL_DAYS = 73;
+var CORE = ['math','ds','en','politics'];
+
+/* ---------- 日期工具 ---------- */
+function mkDate(o){ return new Date(o.y,o.m-1,o.d); }
+function fromStr(s){ var p=s.split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
+function fmt(d){
+  function z(n){return (n<10?'0':'')+n;}
+  return d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate());
+}
+function addDays(d,n){ var x=new Date(d.getTime()); x.setDate(x.getDate()+n); return x; }
+function diffDays(a,b){ return Math.round((b-a)/86400000); }
+function clamp(d){
+  if(d<mkDate(START)) return mkDate(START);
+  if(d>mkDate(END)) return mkDate(END);
+  return d;
+}
+function todayClamped(){ return clamp(new Date()); }
+function dayIndex(s){ return diffDays(mkDate(START),fromStr(s))+1; } // 1..73
+function phaseOf(s){
+  var d=fromStr(s);
+  if(d<mkDate({y:2026,m:11,d:1})) return 1;
+  if(d<mkDate({y:2026,m:12,d:1})) return 2;
+  return 3;
+}
+function between(s,a,b){ var d=fromStr(s); return d>=mkDate(a) && d<=mkDate(b); }
+
+/* ---------- 每日任务 ---------- */
+function getDayTasks(s){
+  var t=[];
+  var math,ds,en,pol;
+  if(between(s,START,{y:2026,m:10,d:18})){
+    math={text:'数学：基础课收尾（高数剩余＋线代基础）＋87—00真题一半',note:'会的章节倍速、只做例题；不做配套基础习题'};
+  }else if(between(s,{y:2026,m:10,d:19},{y:2026,m:10,d:31})){
+    math={text:'数学：1h强化课（倍速）＋2h刷剩余一半87—00真题',note:'按章节不整套限时；卡30分钟跳过'};
+  }else if(between(s,{y:2026,m:11,d:1},{y:2026,m:11,d:10})){
+    math={text:'数学：武忠祥强化课收尾',note:'11月10日后禁止任何新网课'};
+  }else if(between(s,{y:2026,m:11,d:11},{y:2026,m:11,d:30})){
+    math={text:'数学：00—16真题整套限时模考＋订正',note:'压轴只拿第一小问，难问放弃'};
+  }else{
+    math={text:'数学：16—24真题全真模考／错题本复盘',note:'不刷新难题，回顾公式与常规题型'};
+  }
+  if(between(s,START,{y:2026,m:10,d:20})){
+    ds={text:'数据结构：一轮收尾（树、二叉树、图、查找、排序）',note:'放弃KMP与超难算法证明'};
+  }else if(between(s,{y:2026,m:10,d:21},{y:2026,m:10,d:31})){
+    ds={text:'数据结构：王道课后基础、中档题',note:'打字整理简答考点与代码模板'};
+  }else if(between(s,{y:2026,m:11,d:1},{y:2026,m:11,d:15})){
+    ds={text:'数据结构：二刷王道错题，背简答、默代码模板'};
+  }else if(between(s,{y:2026,m:11,d:16},{y:2026,m:11,d:30})){
+    ds={text:'数据结构：模拟卷限时（每两周一套）',note:'训练简答、代码答题规范'};
+  }else{
+    ds={text:'数据结构：背简答、默代码，二刷模拟卷错题'};
+  }
+  if(between(s,START,{y:2026,m:10,d:15})){
+    en={text:'英语：纯背词',note:'新词60~80＋复习旧词160'};
+  }else if(between(s,{y:2026,m:10,d:16},{y:2026,m:10,d:31})){
+    en={text:'英语：背词＋每2天1篇阅读精读',note:'奇数天做题拆句，偶数天复盘生词'};
+  }else if(between(s,{y:2026,m:11,d:1},{y:2026,m:11,d:19})){
+    en={text:'英语：每天1篇阅读（限时18~20分钟）＋新题型',note:'11月10日左右加新题型'};
+  }else if(between(s,{y:2026,m:11,d:20},{y:2026,m:11,d:30})){
+    en={text:'英语：阅读＋新题型＋作文模板',note:'每周打字写1篇作文'};
+  }else{
+    en={text:'英语：整套限时模拟＋作文模板，少量翻译'};
+  }
+  if(phaseOf(s)===1){
+    pol={text:'政治：网课＋肖1000题（只做选择题）'};
+  }else if(phaseOf(s)===2){
+    pol={text:'政治：二刷1000错题＋腿姐冲刺手册（选择题）'};
+  }else{
+    pol={text:'政治：肖八选择题／肖四分析题背诵',note:'肖四上市后全力背分析题'};
+  }
+  t.push({id:'math',g:'math',time:'3小时',o:math});
+  t.push({id:'ds',g:'ds',time:'2~2.5小时',o:ds});
+  t.push({id:'en',g:'en',time:'2小时',o:en});
+  t.push({id:'politics',g:'politics',time:phaseOf(s)===3?'2小时':(phaseOf(s)===2?'1.5小时':'1小时'),o:pol});
+  t.push({id:'health',g:'health',time:'全天',o:{text:'50分钟学习＋10分钟休息，休息抬高右手',note:'手指胀痛加重则当日学习量减半'}});
+  t.push({id:'review',g:'health',time:'睡前',o:{text:'睡前10分钟复盘，记录完成与未完成事项'}});
+  return t;
+}
+
+var GROUPS={
+  math:{title:'数学二',cls:'tag-math'},
+  ds:{title:'830数据结构',cls:'tag-ds'},
+  en:{title:'英语二',cls:'tag-en'},
+  politics:{title:'政治',cls:'tag-politics'},
+  health:{title:'健康与复盘',cls:'tag-health'}
+};
+
+/* ---------- 特殊事件 ---------- */
+function getEvent(s){
+  var map={
+    '2026-10-16':['info','<b>启动英语阅读。</b> 今天起每2天1篇英二阅读Part A精读。'],
+    '2026-10-30':['danger','<b>关键自测日。</b> 闭卷限时完成数二00—10真题＋南宁师大数据结构卷，按分数决定报考院校。'],
+    '2026-11-10':['danger','<b>数学网课截止红线。</b> 今天之后不再看任何新网课，只回看错题片段。'],
+    '2026-11-20':['info','<b>启动作文模板。</b> 整理小作文、大作文共2套模板，每周写1篇。'],
+    '2026-12-01':['info','<b>进入阶段三。</b> 全真模考＋背诵保温，无任何新课。'],
+    '2026-12-19':['danger','<b>今天初试。</b> 沉着冷静，按节奏答题。'],
+    '2026-12-20':['danger','<b>初试第二天。</b> 坚持到底，就是胜利。']
+  };
+  return map[s]||null;
+}
+
+/* ---------- 状态 ---------- */
+var state={checks:{},notes:{},list:[]};
+function load(){
+  try{
+    var raw=localStorage.getItem(STORE_KEY);
+    if(raw){ var x=JSON.parse(raw); state.checks=x.checks||{};state.notes=x.notes||{};state.list=x.list||[]; }
+  }catch(e){}
+}
+function save(){ try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){} }
+function isChecked(s,id){ return (state.checks[s]||[]).indexOf(id)>=0; }
+function toggleCheck(s,id){
+  var arr=state.checks[s]||[];
+  var i=arr.indexOf(id);
+  if(i>=0)arr.splice(i,1);else arr.push(id);
+  state.checks[s]=arr;save();
+}
+function coreDone(s){
+  var tasks=getDayTasks(s);
+  return CORE.every(function(c){
+    return tasks.some(function(t){return t.id===c;}) && isChecked(s,c);
+  });
+}
+
+/* ---------- 视图日期 ---------- */
+var viewDate=todayClamped();
+
+/* ---------- 渲染：今日 ---------- */
+var WEEK=['周日','周一','周二','周三','周四','周五','周六'];
+function renderToday(){
+  var s=fmt(viewDate), ph=phaseOf(s), idx=dayIndex(s);
+  document.getElementById('dayDate').textContent =
+    s.slice(5).replace('-','月')+'日 · '+WEEK[viewDate.getDay()];
+  var pillTxt = ph===1?'阶段一':(ph===2?'阶段二':'阶段三');
+  document.getElementById('dayMeta').innerHTML =
+    '<span class="stage-pill pill-'+ph+'">'+pillTxt+'</span>第 '+idx+' / '+TOTAL_DAYS+' 天';
+
+  // 横幅
+  var ev=getEvent(s), bslot=document.getElementById('bannerSlot');
+  bslot.innerHTML = ev ? '<div class="banner banner-'+ev[0]+'">'+ev[1]+'</div>' : '';
+
+  // 任务
+  var tasks=getDayTasks(s), slot=document.getElementById('taskSlot');
+  var html='', lastG=null;
+  var order=['math','ds','en','politics','health'];
+  order.forEach(function(g){
+    var items=tasks.filter(function(t){return t.g===g;});
+    if(!items.length)return;
+    var meta=GROUPS[g];
+    var gtime=items.map(function(t){return t.time;}).filter(function(v,i,a){return a.indexOf(v)===i;}).join('／');
+    html+='<div class="task-group"><div class="task-group-head">'+
+      '<span class="subject-tag '+meta.cls+'"></span>'+
+      '<span class="task-group-title">'+meta.title+'</span>'+
+      '<span class="task-group-time">'+gtime+'</span></div><div class="task-list">';
+    items.forEach(function(t){
+      var done=isChecked(s,t.id);
+      html+='<button class="task-item '+(done?'done':'')+'" data-id="'+t.id+'">'+
+        '<span class="task-checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke="#f2f0e9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'+
+        '<span class="task-body">'+t.o.text+(t.o.note?'<span class="task-note">'+t.o.note+'</span>':'')+'</span></button>';
+    });
+    html+='</div></div>';
+  });
+  slot.innerHTML=html;
+  slot.querySelectorAll('.task-item').forEach(function(el){
+    el.addEventListener('click',function(){
+      toggleCheck(s,el.getAttribute('data-id'));
+      renderToday();renderStats();
+    });
+  });
+
+  // 复盘
+  var ta=document.getElementById('reviewText');
+  if(document.activeElement!==ta) ta.value=state.notes[s]||'';
+  document.getElementById('reviewSave').textContent = state.notes[s]?'已自动保存':'';
+
+  renderStats();
+}
+
+/* ---------- 渲染：统计 ---------- */
+function renderStats(){
+  var s=fmt(viewDate), tasks=getDayTasks(s);
+  var doneCount=tasks.filter(function(t){return isChecked(s,t.id);}).length;
+  document.getElementById('todayDone').textContent=doneCount+'/'+tasks.length;
+  document.getElementById('todayBar').style.width=(doneCount/tasks.length*100)+'%';
+
+  // 以今天为界统计
+  var t=todayClamped(), ts=fmt(t);
+  var cursor=mkDate(START), end=t>mkDate(END)?mkDate(END):t;
+  var daysDone=0, passed=0;
+  while(cursor<=end){
+    passed++;
+    if(coreDone(fmt(cursor)))daysDone++;
+    cursor=addDays(cursor,1);
+  }
+  // 连续
+  var streak=0, c=end;
+  while(c>=mkDate(START)){
+    if(coreDone(fmt(c))){streak++;c=addDays(c,-1);}else break;
+  }
+  document.getElementById('streakNum').textContent=streak;
+  document.getElementById('daysDone').textContent=daysDone;
+  var pct=Math.round(daysDone/TOTAL_DAYS*100);
+  document.getElementById('overallPct').textContent=pct+'%';
+  document.getElementById('overallBar').style.width=pct+'%';
+}
+
+/* ---------- 倒计时 ---------- */
+function renderCountdown(){
+  var n=diffDays(new Date(),mkDate(EXAM));
+  document.getElementById('countdownNum').textContent = n>0?n:0;
+}
+
+/* ---------- 清单 ---------- */
+var CHECKLIST={
+  clDaily:[
+    '数学：3小时（12月2.5小时），50+10循环；错题打字记录，卡30分钟跳过',
+    '数据结构：2~2.5小时；背简答，打字默写代码框架；难题跳过',
+    '英语：2小时（12月1.5小时）；按阶段完成背词／阅读／作文',
+    '政治：1小时→1.5小时→2小时；以选择题为主，12月背肖四',
+    '每次休息抬高右手，观察有无肿胀、疼痛',
+    '睡前10分钟复盘，未完成项次日优先补'
+  ],
+  clP1:[
+    '10.9—10.15纯背词：每日新词60~80＋复习旧词160',
+    '10.16起每2天1篇英二阅读精读',
+    '10.9—10.18基础课收尾＋一半87—00真题章节刷题',
+    '10.19—10.31强化课＋剩余一半87—00真题',
+    '数据结构10.20前一轮收尾，10.31前完成王道基础、中档题',
+    '政治学一章刷一章肖1000题，只做选择题',
+    '10.30闭卷限时自测，按结果确定报考院校'
+  ],
+  clP2:[
+    '11.10前强化课全部收尾，之后禁止数学新课',
+    '00—16真题整套限时模考，压轴只拿第一小问',
+    '数据结构二刷王道错题，每两周一套模拟卷',
+    '每天1篇阅读精读，11.10左右加入新题型',
+    '11.20起整理2套作文模板，每周打字写1篇',
+    '政治二刷1000错题，看腿姐手册，不背大题'
+  ],
+  clP3:[
+    '16—24真题全真限时模考，复盘全部错题本',
+    '数据结构反复背简答、默代码，二刷模拟卷错题',
+    '英语整套真题限时模拟，熟练作文模板，少量翻译',
+    '肖八只做选择题；肖四上市后全力背诵全部分析题'
+  ]
+};
+function renderChecklist(){
+  Object.keys(CHECKLIST).forEach(function(box){
+    var el=document.getElementById(box);
+    el.innerHTML='';
+    CHECKLIST[box].forEach(function(text,i){
+      var id=box+'-'+i;
+      var done=state.list.indexOf(id)>=0;
+      var b=document.createElement('button');
+      b.className='cl-item '+(done?'done':'');
+      b.innerHTML='<span class="task-checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke="#f2f0e9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="task-body">'+text+'</span>';
+      b.addEventListener('click',function(){
+        var k=state.list.indexOf(id);
+        if(k>=0)state.list.splice(k,1);else state.list.push(id);
+        save();renderChecklist();
+      });
+      el.appendChild(b);
+    });
+  });
+}
+
+/* ---------- toast ---------- */
+var toastTimer;
+function toast(msg){
+  var el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){el.classList.remove('show');},1800);
+}
+
+/* ---------- 路由 ---------- */
+document.getElementById('nav').addEventListener('click',function(e){
+  var b=e.target.closest('.nav-item');
+  if(!b)return;
+  var v=b.getAttribute('data-view');
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
+  b.classList.add('active');
+  document.querySelectorAll('.view').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('view-'+v).classList.add('active');
+  window.scrollTo(0,0);
+});
+
+/* ---------- 手风琴 ---------- */
+document.querySelectorAll('.phase-head').forEach(function(h){
+  h.addEventListener('click',function(){
+    document.getElementById(h.getAttribute('data-phase')).classList.toggle('open');
+  });
+});
+
+/* ---------- 日期切换 ---------- */
+document.getElementById('prevDay').addEventListener('click',function(){
+  viewDate=clamp(addDays(viewDate,-1));renderToday();
+});
+document.getElementById('nextDay').addEventListener('click',function(){
+  viewDate=clamp(addDays(viewDate,1));renderToday();
+});
+document.getElementById('todayJump').addEventListener('click',function(){
+  viewDate=todayClamped();renderToday();toast('已回到今天');
+});
+
+/* ---------- 复盘自动保存 ---------- */
+var noteTimer;
+document.getElementById('reviewText').addEventListener('input',function(e){
+  var s=fmt(viewDate);
+  state.notes[s]=e.target.value;
+  document.getElementById('reviewSave').textContent='输入中…';
+  clearTimeout(noteTimer);
+  noteTimer=setTimeout(function(){save();document.getElementById('reviewSave').textContent='已自动保存';},400);
+});
+
+/* ---------- 重置 ---------- */
+document.getElementById('resetAll').addEventListener('click',function(){
+  if(confirm('确定清空全部勾选、打卡记录和复盘文字吗？此操作不可恢复。')){
+    state={checks:{},notes:{},list:[]};save();
+    renderToday();renderChecklist();toast('已清空全部记录');
+  }
+});
+
+/* ---------- 初始化 ---------- */
+load();
+renderCountdown();
+renderToday();
+renderChecklist();
+setInterval(renderCountdown,60000);
+})();
+</script>
+</body>
+</html>
